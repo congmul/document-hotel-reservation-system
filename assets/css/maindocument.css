@@ -74,6 +74,11 @@ code {
     color: black;
 }
 
+.subTitle > span {
+    font-size: 18px;
+    font-weight: 500;
+}
+
 .subTitle:active {
     text-decoration: none;
 }

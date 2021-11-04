@@ -127,7 +127,7 @@
         <pre>
           <code>
             headers: {
-              'Content-Type': 'application/json',
+              "Content-Type": "application/json",
               authorization: `Bearer ${token}`
             }
           </code>
@@ -199,7 +199,7 @@
     </div>
     <div class="description">
       <p>
-        Get Single user information with their reservation information.
+        Login with Username and Password.
       </p>
       <p class="subTitle">
         Body
@@ -207,8 +207,8 @@
       <pre>
         <code>
           {
-            'username': 'congmul',
-            "password": 'password123'
+            "username": "congmul",
+            "password": "password123"
           }
         </code>
       </pre>
@@ -270,6 +270,212 @@
       </div>
     </article>
     <!-- LOGIN USER -->
+
+    <!-- Signup -->
+    <article>
+      <div class="title">
+        <div class="method">
+          POST
+        </div>
+        <div class="path">
+          /api/user/
+        </div>
+      </div>
+      <div class="description">
+        <p>
+          Sign up
+        </p>
+        <p class="subTitle">
+          Body
+        </p>
+        <pre>
+          <code>
+            {
+              "username": "congmul",
+              "password": "password123",
+              "email": "congmul@congmul.com"
+            }
+          </code>
+        </pre>
+        <p>
+          <a class="subTitle" data-bs-toggle="collapse" href="#user-post-signup" role="button" aria-expanded="false" aria-controls="user-post-signup">
+            Response<i class="fas fa-caret-down"></i>
+          </a>
+        </p>
+        <div class="collapse" id="user-post-signup">
+          <div>
+            <pre>
+              <code>
+                {
+                  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+                            .eyJkYXRhIjp7Il9pZCI6IjYxODBkMGQ
+                            .q12wD9C346y-iyAWe1y0wb7M6H5Wj0Kt0A3sRDbQ7VQ",
+                  "user": {
+                    "username": "congmul100",
+                    "password": "$2b$10$mJMi2aR0aEITvQtP3gKuHek8mn6lXNSa3ItmFVhOnIFZl2YhNw.Zq",
+                    "firstName": "",
+                    "lastName": "",
+                    "email": "congmul@congmul.com",
+                    "points": 0,
+                    "totalNights": 0,
+                    "reservation": [],
+                    "_id": "6183f7733fc2c2e88f486643",
+                    "createAt": "2021-11-04T15:08:35.502Z",
+                    "__v": 0
+                  }
+                }
+              </code>
+            </pre>
+          </div>
+        </div>
+      </article>
+    <!-- Signup -->
+
+    <!-- updateUserInfo -->
+    <article>
+      <div class="title">
+        <div class="method">
+          PUT
+        </div>
+        <div class="path">
+          /api/user/
+        </div>
+      </div>
+      <div class="description">
+        <p>
+          Update User information
+        </p>
+        <p class="subTitle">
+          Body <span>(User Schema)</span>
+        </p>
+        <pre>
+          <code>
+            {
+              username: { type : String, required: true, unique: true },
+              password: { type : String, required: true },
+              firstName: { type: String, default: ""},
+              lastName: { type: String, default: ""},
+              email: { type : String, required: false },
+              address: { street: String, city: String, zipcode: Number, state: String},
+              phoneNumber: String,
+            }
+          </code>
+        </pre>
+        <p>
+          <a class="subTitle" data-bs-toggle="collapse" href="#user-put-user" role="button" aria-expanded="false" aria-controls="user-put-user">
+            Response<i class="fas fa-caret-down"></i>
+          </a>
+        </p>
+        <div class="collapse" id="user-put-user">
+          <div>
+            <pre>
+              <code>
+                {
+                  message: "Success",
+                }
+              </code>
+            </pre>
+          </div>
+        </div>
+      </article>
+    <!-- updateUserInfo -->
+
+    <!-- updateCardInfo -->
+    <article>
+      <div class="title">
+        <div class="method">
+          PUT
+        </div>
+        <div class="path">
+          /api/user/cardinfo/:username
+        </div>
+      </div>
+      <div class="description">
+        <p>
+          Update Card information
+        </p>
+        <p class="subTitle">
+          Body <span>(Card Info Schema)</span>
+        </p>
+        <pre>
+          <code>
+            {
+              cardInfo: {
+                        cardType: String, 
+                        cardNumber: String, 
+                        nameOnCard: String, 
+                        expDate: String, 
+                        cardCvc: String },
+            }
+          </code>
+        </pre>
+        <p>
+          <a class="subTitle" data-bs-toggle="collapse" href="#user-put-cardInfo" role="button" aria-expanded="false" aria-controls="user-put-cardInfo">
+            Response<i class="fas fa-caret-down"></i>
+          </a>
+        </p>
+        <div class="collapse" id="user-put-cardInfo">
+          <div>
+            <pre>
+              <code>
+                {
+                  message: "Success",
+                }
+              </code>
+            </pre>
+          </div>
+        </div>
+      </article>
+    <!-- updateCardInfo -->
+
+    <!-- updateBillingAddress -->
+    <article>
+      <div class="title">
+        <div class="method">
+          PUT
+        </div>
+        <div class="path">
+          /api/user/billingAddress/:userId
+        </div>
+      </div>
+      <div class="description">
+        <p>
+          Update Billing address information
+        </p>
+        <p class="subTitle">
+          Body <span>(Billing address Schema)</span>
+        </p>
+        <pre>
+          <code>
+            {
+              billingAddress: { 
+                                firstName: String, 
+                                lastName: String, 
+                                street: String, 
+                                city: String, 
+                                zipcode: String, 
+                                state: String}
+            }
+          </code>
+        </pre>
+        <p>
+          <a class="subTitle" data-bs-toggle="collapse" href="#user-put-billingaddress" role="button" aria-expanded="false" aria-controls="user-put-billingaddress">
+            Response<i class="fas fa-caret-down"></i>
+          </a>
+        </p>
+        <div class="collapse" id="user-put-billingaddress">
+          <div>
+            <pre>
+              <code>
+                {
+                  message: "Success",
+                }
+              </code>
+            </pre>
+          </div>
+        </div>
+      </article>
+    <!-- updateBillingAddress -->
     </div>
   </section>
 </main>
