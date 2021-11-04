@@ -44,9 +44,13 @@ function onClickNavMenu(e) {
             document.getElementById('model-document-reservation').style.display="block";
             console.log(selectedMenu);
             break;
+        case 'RoomType-Validation':
+            hiddeAll();
+            document.getElementById('business-logic-document-roomType').style.display="block";
+            console.log(selectedMenu);
+            break;
         default:
             console.log("default");
-
     }
 }
 function hiddeAll() {

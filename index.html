@@ -90,11 +90,11 @@
       </li>
       <li class="mb-1">
         <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#bussiness-logic-collapse" aria-expanded="false">
-          Bussiness Logic
+          Business Logic
         </button>
         <div class="collapse" id="bussiness-logic-collapse">
           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-            <li><a href="#" class="link-dark rounded navMenu">Validation</a></li>
+            <li><a href="#" class="link-dark rounded navMenu">RoomType-Validation</a></li>
           </ul>
         </div>
       </li>
@@ -1307,6 +1307,130 @@
       </article>
     </section>
     <!-- Reservation Model - Schema -->
+
+  <!-- Date Validation -->
+  <section id="business-logic-document-roomType" class="container documents">
+    <article>
+      <div class="title border-bottom">
+        <div class="method">
+          Room Type Validation
+        </div>
+      </div>
+      <div class="description">
+        <p>
+          We want to check an available specific room type which has a limited number of rooms during a specific date
+        </p>
+        <p>
+          1. Get reservations that are not canceled and overlap a specific day for a specific room
+        </p>
+        <pre>
+          <code>
+        const allUpcomingByThisRoom = allReservation.filter(reservation => {
+          if(new Date(reservation.dateStart)  > new Date() 
+          && reservation.roomId === roomId 
+          && reservation.isCancel !== true
+          && reservation._id !== reservationId){
+              return reservation;
+          }
+      })
+          </code>
+        </pre>
+
+        <p>
+          2. Get the selected reservation that you want to update.
+        </p>
+        <pre>
+          <code>
+        const thisReservation = allReservation.filter(reservation => reservation._id === reservationId);
+        const thisRoomType = thisReservation[0].hotel.roomType.filter(room => room._id === roomId)
+          </code>
+        </pre>
+
+        <p>
+          3. Creat simple hash Table to organize the number of rooms on a specific date
+        </p>
+        <pre>
+          <code>
+        let dateHashTable = {};
+        for(let i = 0; i < allUpcomingByThisRoomState.length; i++){
+            let dateStart = new Date(allUpcomingByThisRoomState[i].dateStart)
+            let numRooms = allUpcomingByThisRoomState[i].roomQuantity;
+
+            // Calculate difference days between Start and End.
+            let dateEnd = new Date(allUpcomingByThisRoomState[i].dateEnd);
+            let diffTime = Math.abs(dateEnd - dateStart);
+            let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            console.log("diffDays", diffDays);
+
+            for(let i = 0; i < diffDays; i++){
+                let thisDate = `${dateStart.getFullYear()}-${dateStart.getMonth()+1}-${dateStart.getDate()+1}`;
+                if(dateHashTable[thisDate] != null) {
+                    dateHashTable[thisDate] += numRooms;
+                }else{
+                    dateHashTable[thisDate] = numRooms;
+                }
+
+                // Set Next Day
+                dateStart.setDate(dateStart.getDate() + 1);
+            }
+        }
+
+        // result - Upcoming Reservations with the Room.
+        // {
+        //  "2021-11-15": 1,
+        //  "2021-11-17": 2,
+        //  "2021-11-20": 2,
+        //  "2021-11-25": 5,
+        //  "2021-12-23": 2,
+        //  "2021-12-24": 10,
+        //  "2021-12-25": 2,
+        //  "2021-12-30": 2,
+        // }
+          </code>
+        </pre>
+      
+
+        <p>
+          4. Compare user input date and number of rooms with Hashtable.
+        </p>
+        <pre>
+          <code>
+        // Calculate difference days between Start and End.
+        let inputNumRooms = parseInt(inputReservationForUpdate.numRooms);
+        let inputDateStart = new Date(inputReservationForUpdate["update-checkin"])
+        let inputDateEnd = new Date(inputReservationForUpdate["update-checkout"]);
+        let diffTime = Math.abs(inputDateEnd - inputDateStart);
+        let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        console.log("diffDays", diffDays);
+
+        let isCheckAvailableRoom = true;
+        let notAvailableDate = [];
+        for(let i = 0; i < diffDays; i++){ 
+            let thisDate = `${inputDateStart.getFullYear()}-${inputDateStart.getMonth()+1}-${inputDateStart.getDate()+1}`;
+            console.log(thisDate);
+            if(dateHashTable[thisDate] != null 
+                && dateHashTable[thisDate] + inputNumRooms > thisRoomType.quantity){
+                    console.log("Room is not available on the date.")
+                    
+                    notAvailableDate.push(thisDate);
+                    isCheckAvailableRoom = false;
+                }
+            else if(inputNumRooms > thisRoomType.quantity){
+                console.log("Room is not available on the date.")
+                    
+                notAvailableDate.push(thisDate);
+                isCheckAvailableRoom = false;
+            }
+            // Set Next Day
+            inputDateStart.setDate(inputDateStart.getDate() + 1);
+        }
+          </code>
+        </pre>
+    
+
+    </article>
+  </section>
+  <!-- Date Validation -->
 </main>
 
 
