@@ -4,6 +4,11 @@ const documents = document.getElementsByClassName('documents');
 function onClickNavMenu(e) {
     selectedMenu = e.target.innerText;
     switch(selectedMenu){
+        case 'Document':
+            hiddeAll();
+            document.getElementById('api-document-main').style.display="block";
+            console.log(selectedMenu);
+            break;
         case 'User':
             hiddeAll();
             document.getElementById('api-document-user').style.display="block";
@@ -52,7 +57,7 @@ function hiddeAll() {
 
 function main() {
     hiddeAll();
-    document.getElementById('api-document-user').style.display="block";
+    document.getElementById('api-document-main').style.display="block";
     for(let i = 0; i < navMenu.length; i++){
         navMenu[i].onclick=onClickNavMenu;
     }

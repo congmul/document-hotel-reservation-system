@@ -58,10 +58,10 @@
   </header>
   <main>
   <div class="flex-shrink-0 p-3 bg-white" style="width: 280px;">
-    <a href="#" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
+    <div class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
       <svg class="bi me-2" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
-      <span class="fs-5 fw-semibold">Document</span>
-    </a>
+      <a href="#" class="fs-5 fw-semibold link-dark text-decoration-none navMenu">Document</a>
+    </div>
     <ul class="list-unstyled ps-0">
       <li class="mb-1">
         <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
@@ -90,14 +90,23 @@
       </li>
       <li class="mb-1">
         <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
+          Bussiness Logic
+        </button>
+        <div class="collapse" id="orders-collapse">
+          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+            <li><a href="#" class="link-dark rounded navMenu">Client</a></li>
+            <li><a href="#" class="link-dark rounded navMenu">Backend</a></li>
+          </ul>
+        </div>
+      </li>
+      <li class="mb-1">
+        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
           Pipeline
         </button>
         <div class="collapse" id="orders-collapse">
           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-            <li><a href="#" class="link-dark rounded navMenu">New</a></li>
-            <li><a href="#" class="link-dark rounded navMenu">Processed</a></li>
-            <li><a href="#" class="link-dark rounded navMenu">Shipped</a></li>
-            <li><a href="#" class="link-dark rounded navMenu">Returned</a></li>
+            <li><a href="#" class="link-dark rounded navMenu">Client</a></li>
+            <li><a href="#" class="link-dark rounded navMenu">Backend</a></li>
           </ul>
         </div>
       </li>
@@ -105,6 +114,39 @@
   </div>
 
   <div class="b-example-divider"></div>
+
+  <!-- Document Main -->
+  <section id="api-document-main" class="container documents">
+    <article>
+      <div class="title">
+        <div class="method">
+          Hotel Reservation System Document
+        </div>
+      </div>
+      <div class="description">
+        <p>
+          This reservation system that allows a user to reserve hotel. 
+        </p>
+        <p class="subTitle">
+          User Story
+        </p>
+        <pre>
+          <code>
+            AS a user
+            I WANT to reserve a hotel room with the Date and number of rooms
+            SO THAT I can check all my reservation (Upcoming, Past, Cancel)
+          </code>
+        </pre>
+        <p>
+          <a class="subTitle" data-bs-toggle="collapse" href="#user-get-response" role="button" aria-expanded="false" aria-controls="user-get-response">
+            Response<i class="fas fa-caret-down"></i>
+          </a>
+        </p>
+        
+    </article>
+  </section>
+  <!-- Document Main -->
+
   <section id="api-document-user" class="container documents">
 
     <!-- GET USER  -->
