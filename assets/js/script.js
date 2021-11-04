@@ -19,12 +19,31 @@ function onClickNavMenu(e) {
             document.getElementById('api-document-hotel').style.display="block";
             console.log(selectedMenu);
             break;
+        case 'Overview-model':
+            hiddeAll();
+            document.getElementById('model-document-overview').style.display="block";
+            console.log(selectedMenu);
+            break;
+        case 'User-schema':
+            hiddeAll();
+            document.getElementById('model-document-user').style.display="block";
+            console.log(selectedMenu);
+            break;
+        case 'Hotel-schema':
+            hiddeAll();
+            document.getElementById('model-document-hotel').style.display="block";
+            console.log(selectedMenu);
+            break;
+        case 'Reservation-schema':
+            hiddeAll();
+            document.getElementById('model-document-reservation').style.display="block";
+            console.log(selectedMenu);
+            break;
         default:
             console.log("default");
 
     }
 }
-
 function hiddeAll() {
     for(let i = 0; i < documents.length; i++){
         documents[i].style.display="none";

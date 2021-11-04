@@ -58,7 +58,7 @@
   </header>
   <main>
   <div class="flex-shrink-0 p-3 bg-white" style="width: 280px;">
-    <a href="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
+    <a href="#" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
       <svg class="bi me-2" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
       <span class="fs-5 fw-semibold">Document</span>
     </a>
@@ -77,27 +77,27 @@
       </li>
       <li class="mb-1">
         <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
-          Pipeline
+          Model
         </button>
         <div class="collapse" id="dashboard-collapse">
           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-            <li><a href="#" class="link-dark rounded">Overview</a></li>
-            <li><a href="#" class="link-dark rounded">Weekly</a></li>
-            <li><a href="#" class="link-dark rounded">Monthly</a></li>
-            <li><a href="#" class="link-dark rounded">Annually</a></li>
+            <li><a href="#" class="link-dark rounded navMenu">Overview-model</a></li>
+            <li><a href="#" class="link-dark rounded navMenu">User-schema</a></li>
+            <li><a href="#" class="link-dark rounded navMenu">Hotel-schema</a></li>
+            <li><a href="#" class="link-dark rounded navMenu">Reservation-schema</a></li>
           </ul>
         </div>
       </li>
       <li class="mb-1">
         <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
-          Orders
+          Pipeline
         </button>
         <div class="collapse" id="orders-collapse">
           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-            <li><a href="#" class="link-dark rounded">New</a></li>
-            <li><a href="#" class="link-dark rounded">Processed</a></li>
-            <li><a href="#" class="link-dark rounded">Shipped</a></li>
-            <li><a href="#" class="link-dark rounded">Returned</a></li>
+            <li><a href="#" class="link-dark rounded navMenu">New</a></li>
+            <li><a href="#" class="link-dark rounded navMenu">Processed</a></li>
+            <li><a href="#" class="link-dark rounded navMenu">Shipped</a></li>
+            <li><a href="#" class="link-dark rounded navMenu">Returned</a></li>
           </ul>
         </div>
       </li>
@@ -1046,8 +1046,178 @@
         </div>
     </article>
     <!-- Cancel Reservaion  -->
-
   </section>
+
+  <!-- User Model - Overview -->
+  <section id="model-document-overview" class="container documents">
+    <article>
+      <div class="title border-bottom">
+        <div class="method">
+          Model Overview
+        </div>
+      </div>
+      <div class="description">
+        <p>
+          <img src="./assets/img/model-img.png" width="100%" />
+        </p>
+        <p class="subTitle">
+          Relationships
+        </p>
+        <pre>
+          <code>
+            -. Model One-to-Many Relationships​
+
+            1) Reference Document Pattern​
+
+            2) Embedded Document Pattern
+          </code>
+        </pre>
+    </article>
+  </section>
+  <!-- User Model - Overview -->
+
+  <!-- User Model - Schema -->
+  <section id="model-document-user" class="container documents">
+    <article>
+      <div class="title border-bottom">
+        <div class="method">
+          User Schema
+        </div>
+      </div>
+      <div class="description">
+        <pre>
+          <code>
+            const mongoose = require('mongoose');
+            const bcrypt = require('bcrypt');
+
+            const Schema = mongoose.Schema;
+
+            const userSchema = new Schema({
+                username: { type : String, required: true, unique: true },
+                password: { type : String, required: true },
+                firstName: { type: String, default: ""},
+                lastName: { type: String, default: ""},
+                email: { type : String, required: false },
+                address: { street: String, city: String, zipcode: Number, state: String},
+                billingAddress: { firstName: String, lastName: String, street: String, city: String, zipcode: String, state: String},
+                phoneNumber: String,
+                points: { type: Number, default: 0},
+                totalNights: { type: Number, default: 0},
+                cardInfo: {cardType: String, cardNumber: String, nameOnCard: String, expDate: String, cardCvc: String },
+                reservation:[{ type: Schema.Types.ObjectId, ref: 'Reservation'}],
+                createAt: { type: Date, default: Date.now }
+            })
+
+            // built-in methods in Schema object
+            userSchema.pre('save', async function(next) {
+                const saltRounds = 10;
+                // isNew: Boolean flag specifying if the document is new.
+                // isModified(FieldName): Returns true if any of the given paths is modified, else false.
+                if(this.isNew || this.isModified('password')){   
+                    this.password = await bcrypt.hash(this.password, saltRounds);
+                }
+            })
+
+            userSchema.methods.isCorrectPassword = function(password) {
+                return bcrypt.compare(password, this.password);
+            }
+
+            const User = mongoose.model('User', userSchema);
+
+            module.exports = User;
+          </code>
+        </pre>
+    </article>
+  </section>
+  <!-- User Model - Schema -->
+
+    <!-- Hotel Model - Schema -->
+    <section id="model-document-hotel" class="container documents">
+      <article>
+        <div class="title border-bottom">
+          <div class="method">
+            Hotel Schema
+          </div>
+        </div>
+        <div class="description">
+          <p class="subTitle">
+            Hotel Schema
+          </p>
+          <pre>
+            <code>
+            const mongoose = require('mongoose');
+            const roomTypeSchema = require('./RoomType');
+            const Schema = mongoose.Schema;
+                        
+            const hotelSchema = new Schema({
+                name: { type : String, required: true, unique: true },
+                location: { street: String, city: String, zipcode: Number, state: String},
+                roomType: [roomTypeSchema],
+                createAt: { type: Date, default: Date.now },
+                image: {type: String, default: "https://images.financialexpress.com/2020/09/hotel-660x440-620x413.jpg"}
+            })
+            
+            const Hotel = mongoose.model('Hotel', hotelSchema);
+            
+            module.exports = Hotel;
+            </code>
+          </pre>
+          <p class="subTitle">
+            roomType Schema
+          </p>
+          <pre>
+            <code>
+              const mongoose = require('mongoose');
+
+              const Schema = mongoose.Schema;
+              
+              const roomTypeSchema = new Schema({
+                  name: { type : String, required: true},
+                  beds: Number,
+                  price: Number,
+                  quantity: Number
+              })
+              
+              
+              module.exports = roomTypeSchema;
+            </code>
+          </pre>
+      </article>
+    </section>
+    <!-- Hotel Model - Schema -->
+
+    <!-- Reservation Model - Schema -->
+    <section id="model-document-reservation" class="container documents">
+      <article>
+        <div class="title border-bottom">
+          <div class="method">
+            Reservaion Schema
+          </div>
+        </div>
+        <div class="description">
+          <pre>
+            <code>
+              const mongoose = require('mongoose');
+              const Schema = mongoose.Schema;
+              
+              const reservationSchema = new Schema({
+                  hotel:{ type: Schema.Types.ObjectId, ref: 'Hotel'},
+                  roomId: {type: Schema.Types.ObjectId, ref: 'RoomType'},
+                  roomQuantity: {type: Number, default: 1},
+                  dateStart: { type: Date },
+                  dateEnd: { type: Date },
+                  cardInfo: { cardType: String, cardNumber: String, nameOnCard: String, expDate: String, cardCvc: String },
+                  isCancel: { type: Boolean, default: false }
+              })
+              
+              const Reservation = mongoose.model('Reservation', reservationSchema);
+              
+              module.exports = Reservation;
+            </code>
+          </pre>
+      </article>
+    </section>
+    <!-- Reservation Model - Schema -->
 </main>
 
 
