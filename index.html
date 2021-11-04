@@ -69,9 +69,9 @@
         </button>
         <div class="collapse show" id="home-collapse">
           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-            <li><a href="#" class="link-dark rounded">User</a></li>
-            <li><a href="#" class="link-dark rounded">Reservation</a></li>
-            <li><a href="#" class="link-dark rounded">Hotel</a></li>
+            <li><a href="#" class="link-dark rounded navMenu">User</a></li>
+            <li><a href="#" class="link-dark rounded navMenu">Hotel</a></li>
+            <li><a href="#" class="link-dark rounded navMenu">Reservation</a></li>
           </ul>
         </div>
       </li>
@@ -105,7 +105,7 @@
   </div>
 
   <div class="b-example-divider"></div>
-  <section id="api-document-user" class="container">
+  <section id="api-document-user" class="container documents">
 
     <!-- GET USER  -->
     <article>
@@ -478,11 +478,233 @@
     <!-- updateBillingAddress -->
     </div>
   </section>
+
+  <section id="api-document-hotel" class="container documents">
+    <!-- GET Hotel  -->
+    <article>
+      <div class="title">
+        <div class="method">
+          GET
+        </div>
+        <div class="path">
+          /api/hotel/
+        </div>
+      </div>
+      <div class="description">
+        <p>
+          Get Hotel Information
+        </p>
+        <!-- <p class="subTitle">
+          Header
+        </p>
+        <pre>
+          <code>
+          </code>
+        </pre> -->
+        <p>
+          <a class="subTitle" data-bs-toggle="collapse" href="#user-get-hotel" role="button" aria-expanded="false" aria-controls="user-get-hotel">
+            Response<i class="fas fa-caret-down"></i>
+          </a>
+        </p>
+        <div class="collapse" id="user-get-hotel">
+          <div>
+            <pre>
+            <code>
+              [
+                {
+                  "location": {
+                    "street": "2 Summerview Way",
+                    "city": "Milwaukee",
+                    "zipcode": 53277,
+                    "state": "Wisconsin"
+                  },
+                  "_id": "616f1a968cd784a10e38a971",
+                  "name": "Ward",
+                  "roomType": [
+                    {
+                      "name": "Standard",
+                      "beds": 3,
+                      "price": 337,
+                      "_id": "616f1a968cd784a10e38a972",
+                      "quantity": 6
+                    },
+                    {
+                      "name": "Family Suite",
+                      "beds": 4,
+                      "price": 447,
+                      "_id": "616f1a968cd784a10e38a973",
+                      "quantity": 8
+                    }
+                  ],
+                  "createAt": "2021-10-19T19:20:54.413Z",
+                  "__v": 0,
+                  "image": "https://cdn.britannica.com/96/115096-050-5AFDAF5D/Bellagio-Hotel-Casino-Las-Vegas.jpg"
+                },
+                {...},
+                {...},
+                ...
+              ]
+            </code>
+            </pre>
+          </div>
+        </div>
+    </article>
+    <!-- GET Hotel -->
+
+
+    <!-- Get Hotel by ID -->
+    <article>
+      <div class="title">
+        <div class="method">
+          GET
+        </div>
+        <div class="path">
+          /api/hotel/id/:hotelId
+        </div>
+      </div>
+      <div class="description">
+        <p>
+          Get a Hotel Information by Id
+        </p>
+        <!-- <p class="subTitle">
+          Header
+        </p>
+        <pre>
+          <code>
+          </code>
+        </pre> -->
+        <p>
+          <a class="subTitle" data-bs-toggle="collapse" href="#user-get-hotelbyId" role="button" aria-expanded="false" aria-controls="user-get-hotelbyId">
+            Response<i class="fas fa-caret-down"></i>
+          </a>
+        </p>
+        <div class="collapse" id="user-get-hotelbyId">
+          <div>
+            <pre>
+            <code>
+              {
+                "location": {
+                  "street": "59203 Schlimgen Street",
+                  "city": "Youngstown",
+                  "zipcode": 44505,
+                  "state": "Ohio"
+                },
+                "_id": "616f1a968cd784a10e38a981",
+                "name": "Tremblay",
+                "roomType": [
+                  {
+                    "name": "Standard",
+                    "beds": 4,
+                    "price": 309,
+                    "_id": "616f1a968cd784a10e38a982",
+                    "quantity": 13
+                  },
+                  {
+                    "name": "King Suite",
+                    "beds": 4,
+                    "price": 122,
+                    "_id": "616f1a968cd784a10e38a984",
+                    "quantity": 7
+                  }
+                ],
+                "createAt": "2021-10-19T19:20:54.455Z",
+                "__v": 0,
+                "image": "https://media.cntraveler.com/photos/613aabab7084bd911b309b44/master/pass/Nobu%20Hotel%20Chicago_006-NC-Zen%20Deluxe.jpg"
+              }
+            </code>
+            </pre>
+          </div>
+        </div>
+    </article>
+    <!-- Get Hotel By ID -->
+
+    <!-- Get getFeatured -->
+    <article>
+      <div class="title">
+        <div class="method">
+          GET
+        </div>
+        <div class="path">
+          /api/hotel/featured
+        </div>
+      </div>
+      <div class="description">
+        <p>
+          Get Random Selections of 3 hotels
+        </p>
+        <!-- <p class="subTitle">
+          Header
+        </p>
+        <pre>
+          <code>
+          </code>
+        </pre> -->
+        <p>
+          <a class="subTitle" data-bs-toggle="collapse" href="#user-get-featured" role="button" aria-expanded="false" aria-controls="user-get-featured">
+            Response<i class="fas fa-caret-down"></i>
+          </a>
+        </p>
+        <div class="collapse" id="user-get-featured">
+          <div>
+            <pre>
+            <code>
+              [
+                {
+                  "location": {
+                    "street": "3 Truax Way",
+                    "city": "Fort Lauderdale",
+                    "zipcode": 33330,
+                    "state": "Florida"
+                  },
+                  "_id": "616f1a968cd784a10e38a968",
+                  "name": "Paucek",
+                  "roomType": [
+                    {
+                      "name": "Standard",
+                      "beds": 3,
+                      "price": 337,
+                      "_id": "616f1a968cd784a10e38a969",
+                      "quantity": 5
+                    },
+                    {
+                      "name": "King Suite",
+                      "beds": 4,
+                      "price": 122,
+                      "_id": "616f1a968cd784a10e38a96a",
+                      "quantity": 11
+                    },
+                    {
+                      "name": "Deluxe",
+                      "beds": 6,
+                      "price": 281,
+                      "_id": "616f1a968cd784a10e38a96c",
+                      "quantity": 10
+                    }
+                  ],
+                  "createAt": "2021-10-19T19:20:54.373Z",
+                  "__v": 0,
+                  "image": "https://images.pexels.com/photos/164595/pexels-photo-164595.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+                },
+                { ... },
+                { ... }
+              ]
+            </code>
+            </pre>
+          </div>
+        </div>
+    </article>
+     <!-- Get getFeatured -->
+  </section>
+
+  <section id="api-document-reservation" class="container documents">
+    reservation;
+  </section>
 </main>
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
       <script src="sidebars.js"></script>
+      <script src="./assets/js/script.js"></script>
   </body>
 </html>
