@@ -89,21 +89,20 @@
         </div>
       </li>
       <li class="mb-1">
-        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
+        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#bussiness-logic-collapse" aria-expanded="false">
           Bussiness Logic
         </button>
-        <div class="collapse" id="orders-collapse">
+        <div class="collapse" id="bussiness-logic-collapse">
           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-            <li><a href="#" class="link-dark rounded navMenu">Client</a></li>
-            <li><a href="#" class="link-dark rounded navMenu">Backend</a></li>
+            <li><a href="#" class="link-dark rounded navMenu">Validation</a></li>
           </ul>
         </div>
       </li>
       <li class="mb-1">
-        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
+        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#pipeline-collapse" aria-expanded="false">
           Pipeline
         </button>
-        <div class="collapse" id="orders-collapse">
+        <div class="collapse" id="pipeline-collapse">
           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
             <li><a href="#" class="link-dark rounded navMenu">Client</a></li>
             <li><a href="#" class="link-dark rounded navMenu">Backend</a></li>
@@ -132,23 +131,65 @@
         </p>
         <pre>
           <code>
-            AS a user
-            I WANT to reserve a hotel room with the Date and number of rooms
-            SO THAT I can check all my reservations (Upcoming, Past, Cancel)
+      AS a user
+      I WANT to reserve a hotel room with the Date and number of rooms
+      SO THAT I can check all my reservations (Upcoming, Past, Cancel)
           </code>
         </pre>
 
         <p class="subTitle">
-          Acceptance Criteria
+          User Story in detail
         </p>
         <pre>
           <code>
-            AS a user
-            I WANT to reserve a hotel room with the Date and number of rooms
-            SO THAT I can check all my reservations (Upcoming, Past, Cancel)
+      When visit the site on the homepage, I can:
+       * see navigation bar
+       * see banner 
+       * see three hotel card
+       * see 'See More' button
+      
+      When click one of hotel card, I can:
+       * see the hotel information
+       * search rooms with Check in, Check out, and number of rooms on a form.
+      
+      When click submit button, I can:
+       * see the available rooms list.
+
+      When click one of reserve button, I can:
+       * see warning modal if I'm not loggined.
+       * see preview page after login.
+       * see Hotel, Card, Billing Address information on the preview page
+       * update card and billing address information on the preview page
+       * see 'Make a reservation' and 'Cancel' button
+
+      When click Account button on Nav bar, I can:
+       * see Overview, My Trips, and Profile tab Menu
+       * see total points and nights on Overview menu 
+       * see Upcoming, Canceled, and Past Trips sub Tab menu
+       * see upcoming reservation information on Upcoming tab menu
+       * see 'Update' and 'Cancel' menu
+       * When click 'Update' button, I can see Update modal.
+       * When click 'Cancel' button, I can see warning notice. 
+       * see canceled reservation on Canceled tab menu
+       * see past trips on Past Trips tab menu
+       * see user information on Profile
+       * see 'Update' menu to update the information
           </code>
         </pre>
          
+      <p class="subTitle">
+        Technologies
+      </p>
+      <pre>
+        <code>
+      MERN Stack
+      Bootstrap
+      Redux Toolkit
+      JWT
+      i18next
+        </code>
+      </pre>
+
     </article>
   </section>
   <!-- Document Main -->
