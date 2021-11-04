@@ -25,12 +25,18 @@ function onClickNavMenu(e) {
     }
 }
 
-for(let i = 0; i < navMenu.length; i++){
-    navMenu[i].onclick=onClickNavMenu;
-}
-
 function hiddeAll() {
     for(let i = 0; i < documents.length; i++){
         documents[i].style.display="none";
     }
 }
+
+function main() {
+    hiddeAll();
+    document.getElementById('api-document-user').style.display="block";
+    for(let i = 0; i < navMenu.length; i++){
+        navMenu[i].onclick=onClickNavMenu;
+    }
+}
+
+main();

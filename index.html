@@ -697,7 +697,356 @@
   </section>
 
   <section id="api-document-reservation" class="container documents">
-    reservation;
+    <!-- Get All reservation -->
+    <article>
+      <div class="title">
+        <div class="method">
+          GET
+        </div>
+        <div class="path">
+          /api/reservation/
+        </div>
+      </div>
+      <div class="description">
+        <p>
+          Get All reservation information with Hotel Information
+        </p>
+        <!-- <p class="subTitle">
+          Header
+        </p>
+        <pre>
+          <code>
+          </code>
+        </pre> -->
+        <p>
+          <a class="subTitle" data-bs-toggle="collapse" href="#reservation-get-reservation" role="button" aria-expanded="false" aria-controls="reservation-get-reservation">
+            Response<i class="fas fa-caret-down"></i>
+          </a>
+        </p>
+        <div class="collapse" id="reservation-get-reservation">
+          <div>
+            <pre>
+            <code>
+              [
+                {
+                  "roomQuantity": 1,
+                  "_id": "6179cf0726bbd2ce4e4615e5",
+                  "hotel": {
+                    "location": {
+                      "street": "54 Gateway Drive",
+                      "city": "New York City",
+                      "zipcode": 10115,
+                      "state": "New York"
+                    },
+                    "_id": "616f1a968cd784a10e38a98c",
+                    "name": "Schmeler",
+                    "roomType": [
+                      {
+                        "name": "Family Suite",
+                        "beds": 2,
+                        "price": 368,
+                        "_id": "616f1a968cd784a10e38a98d",
+                        "quantity": 9
+                      },
+                      {
+                        "name": "Standard",
+                        "beds": 3,
+                        "price": 337,
+                        "_id": "616f1a968cd784a10e38a98e",
+                        "quantity": 6
+                      },
+                      {
+                        "name": "King Suite",
+                        "beds": 4,
+                        "price": 122,
+                        "_id": "616f1a968cd784a10e38a98f",
+                        "quantity": 8
+                      }
+                    ],
+                    "createAt": "2021-10-19T19:20:54.487Z",
+                    "__v": 0,
+                    "image": "https://images.pexels.com/photos/2506988/pexels-photo-2506988.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+                  },
+                  "roomId": "616f1a968cd784a10e38a98d",
+                  "dateStart": "2021-11-02T07:00:00.000Z",
+                  "dateEnd": "2021-11-03T07:00:00.000Z",
+                  "isCancel": true,
+                  "__v": 0
+                },
+                { ... },
+                { ... }
+              ]
+            </code>
+            </pre>
+          </div>
+        </div>
+    </article>
+    <!-- Get All reservation -->
+
+    <!-- Get Reservation by Id -->
+    <article>
+      <div class="title">
+        <div class="method">
+          GET
+        </div>
+        <div class="path">
+          /api/reservation/:id
+        </div>
+      </div>
+      <div class="description">
+        <p>
+          Get one reservation information with Hotel Information By Id
+        </p>
+        <!-- <p class="subTitle">
+          Header
+        </p>
+        <pre>
+          <code>
+          </code>
+        </pre> -->
+        <p>
+          <a class="subTitle" data-bs-toggle="collapse" href="#reservation-get-reservationById" role="button" aria-expanded="false" aria-controls="reservation-get-reservationById">
+            Response<i class="fas fa-caret-down"></i>
+          </a>
+        </p>
+        <div class="collapse" id="reservation-get-reservationById">
+          <div>
+            <pre>
+            <code>
+                {
+                  "roomQuantity": 1,
+                  "_id": "6179cf0726bbd2ce4e4615e5",
+                  "hotel": {
+                    "location": {
+                      "street": "54 Gateway Drive",
+                      "city": "New York City",
+                      "zipcode": 10115,
+                      "state": "New York"
+                    },
+                    "_id": "616f1a968cd784a10e38a98c",
+                    "name": "Schmeler",
+                    "roomType": [
+                      {
+                        "name": "Family Suite",
+                        "beds": 2,
+                        "price": 368,
+                        "_id": "616f1a968cd784a10e38a98d",
+                        "quantity": 9
+                      },
+                      {
+                        "name": "Standard",
+                        "beds": 3,
+                        "price": 337,
+                        "_id": "616f1a968cd784a10e38a98e",
+                        "quantity": 6
+                      },
+                      {
+                        "name": "King Suite",
+                        "beds": 4,
+                        "price": 122,
+                        "_id": "616f1a968cd784a10e38a98f",
+                        "quantity": 8
+                      }
+                    ],
+                    "createAt": "2021-10-19T19:20:54.487Z",
+                    "__v": 0,
+                    "image": "https://images.pexels.com/photos/2506988/pexels-photo-2506988.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+                  },
+                  "roomId": "616f1a968cd784a10e38a98d",
+                  "dateStart": "2021-11-02T07:00:00.000Z",
+                  "dateEnd": "2021-11-03T07:00:00.000Z",
+                  "isCancel": true,
+                  "__v": 0
+                }
+            </code>
+            </pre>
+          </div>
+        </div>
+    </article>
+    <!-- Get Reservation by Id -->
+
+    <!-- Get Specific Reservation by roomId and Date -->
+    <article>
+      <div class="title">
+        <div class="method">
+          GET
+        </div>
+        <div class="path">
+          /api/reservation/day/:checkin/:checkout/:roomId
+        </div>
+      </div>
+      <div class="description">
+        <p>
+          Get noncancelled reservations that overlap a specified day for a specified room
+        </p>
+        <p class="subTitle">
+          Params Example
+        </p>
+        <pre>
+          <code>
+            /api/reservation/day/2021-11-11/2021-11-18/616f1a968cd784a10e38a982
+          </code>
+        </pre>
+        <p>
+          <a class="subTitle" data-bs-toggle="collapse" href="#reservation-getByDateRoomId" role="button" aria-expanded="false" aria-controls="reservation-getByDateRoomId">
+            Response<i class="fas fa-caret-down"></i>
+          </a>
+        </p>
+        <div class="collapse" id="reservation-getByDateRoomId">
+          <div>
+            <pre>
+            <code>
+              [
+              ]
+            </code>
+            </pre>
+          </div>
+        </div>
+    </article>
+    <!-- Get Specific Reservation by roomId and Date  -->
+
+    <!-- Post (create) a reservation -->
+    <article>
+      <div class="title">
+        <div class="method">
+          POST
+        </div>
+        <div class="path">
+          /api/reservation/:userId/:roomPrice
+        </div>
+      </div>
+      <div class="description">
+        <p>
+          Create a reservation
+        </p>
+        <p class="subTitle">
+          Body
+        </p>
+        <pre>
+          <code>
+            { 
+              "hotel": "616f1a968cd784a10e38a9ae",
+	            "roomId": "616f1a968cd784a10e38a9b1",
+              "roomQuantity": 5,
+              "dateStart": "2021-11-22", 
+              "dateEnd": "2021-11-24", 
+              "cardInfo": { ... },
+              "isCancel": 2,
+            }
+          </code>
+        </pre>
+        <p>
+          <a class="subTitle" data-bs-toggle="collapse" href="#reservation-put-update" role="button" aria-expanded="false" aria-controls="reservation-put-update">
+            Response<i class="fas fa-caret-down"></i>
+          </a>
+        </p>
+        <div class="collapse" id="reservation-put-update">
+          <div>
+            <pre>
+            <code>
+              {
+                message: "Succeed", 
+                updatedNights: 50, 
+                updatedPoints: 1050
+              }
+            </code>
+            </pre>
+          </div>
+        </div>
+    </article>
+    <!-- Post (create) a reservation -->
+
+    <!-- Update Reservation Date and Nums of Room-->
+    <article>
+      <div class="title">
+        <div class="method">
+          PUT
+        </div>
+        <div class="path">
+          /api/reservation/update/:reservationId/:userId/:roomPrice
+        </div>
+      </div>
+      <div class="description">
+        <p>
+          Update Date and number of rooms of a reservation
+        </p>
+        <p class="subTitle">
+          Body
+        </p>
+        <pre>
+          <code>
+            { 
+              dateStart: '2021-11-22', 
+              dateEnd: '2021-11-24', 
+              roomQuantity: 2 
+            }
+          </code>
+        </pre>
+        <p>
+          <a class="subTitle" data-bs-toggle="collapse" href="#reservation-put-update" role="button" aria-expanded="false" aria-controls="reservation-put-update">
+            Response<i class="fas fa-caret-down"></i>
+          </a>
+        </p>
+        <div class="collapse" id="reservation-put-update">
+          <div>
+            <pre>
+            <code>
+              {
+                message: "Succeed", 
+                updatedNights: 50, 
+                updatedPoints: 1050
+              }
+            </code>
+            </pre>
+          </div>
+        </div>
+    </article>
+    <!-- Update Reservation and Nums of Room -->
+
+
+    <!-- Cancel Reservaion  -->
+    <article>
+      <div class="title">
+        <div class="method">
+          PUT
+        </div>
+        <div class="path">
+          /api/reservation/cancel/:id/:userId
+        </div>
+      </div>
+      <div class="description">
+        <p>
+          Cancel a reservation
+        </p>
+        <!-- <p class="subTitle">
+          Params Example
+        </p> -->
+        <!-- <pre>
+          <code>
+
+          </code>
+        </pre> -->
+        <p>
+          <a class="subTitle" data-bs-toggle="collapse" href="#reservation-put-cancel" role="button" aria-expanded="false" aria-controls="reservation-put-cancel">
+            Response<i class="fas fa-caret-down"></i>
+          </a>
+        </p>
+        <div class="collapse" id="reservation-put-cancel">
+          <div>
+            <pre>
+            <code>
+              {
+                message: "cancel it successfully", 
+                updatedNights: 50, 
+                updatedPoints: 1050
+              }
+            </code>
+            </pre>
+          </div>
+        </div>
+    </article>
+    <!-- Cancel Reservaion  -->
+
   </section>
 </main>
 
