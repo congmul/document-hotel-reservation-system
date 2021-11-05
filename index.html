@@ -64,10 +64,10 @@
     </div>
     <ul class="list-unstyled ps-0">
       <li class="mb-1">
-        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
+        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="false">
           API
         </button>
-        <div class="collapse show" id="home-collapse">
+        <div class="collapse" id="home-collapse">
           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
             <li><a href="#" class="link-dark rounded navMenu">User</a></li>
             <li><a href="#" class="link-dark rounded navMenu">Hotel</a></li>
@@ -97,6 +97,22 @@
             <li><a href="#" class="link-dark rounded navMenu">RoomType-Validation</a></li>
           </ul>
         </div>
+      </li>
+      <li class="mb-1">
+        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#jwt-authentication" aria-expanded="false">
+          JWT Auth
+        </button>
+        <div class="collapse" id="jwt-authentication">
+          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+            <li><a href="#" class="link-dark rounded navMenu">JWT-BackEnd</a></li>
+            <li><a href="#" class="link-dark rounded navMenu">JWT-FrontEnd</a></li>
+          </ul>
+        </div>
+      </li>
+      <li class="mb-1">
+        <button class="btn btn-toggle align-items-center rounded collapsed" aria-expanded="false">
+          <a href="#" class="link-dark rounded navMenu">Redux Toolkit</a>
+        </button>
       </li>
     </ul>
   </div>
@@ -1433,6 +1449,264 @@
     </article>
   </section>
   <!-- Date Validation -->
+
+
+  <!-- JWT Auth -->
+  <section id="jwt-auth-backend" class="container documents">
+    <article>
+      <div class="title border-bottom">
+        <div class="method">
+          JSON Web Token - BackEnd
+        </div>
+      </div>
+      <div class="description">
+        <p>
+          We use a token to securely transmit information between parties as a JSON object.
+        </p>
+        <p>
+          Token will be created with user data in BackEnd 
+        </p>
+        <p class="subTitle">
+          Auth.js
+        </p>
+        <pre>
+          <code>
+            const jwt = require('jsonwebtoken');
+
+            // set token secret and expiration date
+            const secret = 'mysecretsshhhhh';
+            const expiration = '2h';
+            
+            module.exports = {
+              // function for our authenticated routes
+              authMiddleware: function (req, res, next) {
+                // allows token to be sent via  req.query or headers
+                let token = req.query.token || req.headers.authorization;
+                
+                // ["Bearer", "<tokenvalue>"]
+                console.log(req.headers);
+                if (req.headers.authorization) {
+                  token = token.split(' ').pop().trim();
+                }
+            
+                if (!token) {
+                  return res.status(400).json({ message: 'You have no token!' });
+                }
+            
+                // verify token and get user data out of it
+                try {
+                  const { data } = jwt.verify(token, secret, { maxAge: expiration });
+                  req.user = data;
+                } catch {
+                  // console.log('Invalid token');
+                  return res.status(400).json({ message: 'invalid token!' });
+                }
+            
+                // send to next endpoint
+                next();
+              },
+              signToken: function ({ _id, username, email, points, totalNights, firstName = "" }) {
+                const payload = { _id, username, email, points, totalNights, firstName  };
+            
+                return jwt.sign({ data: payload }, secret, { expiresIn: expiration });
+              },
+            };
+          </code>
+        </pre>
+        <p class="subTitle">
+          Usage in User Router
+        </p>
+        <pre>
+          <code>
+            // import middleware
+            const { authMiddleware } = require('../../libs/auth');
+
+            router.get('/me', authMiddleware, async (req, res) => {
+              // req.user from authMiddleware
+              
+              try {
+                  const response = await getSingleUser(req.user);
+                  res.json(response);
+              }catch(error){
+                  res.status(500).json(error);
+              }
+          });
+          </code>
+        </pre>
+      </div>
+    </article>
+  </section>
+
+  <section id="jwt-auth-frontend" class="container documents">
+    <article>
+      <div class="title border-bottom">
+        <div class="method">
+          JSON Web Token - FrontEnd
+        </div>
+      </div>
+      <div class="description">
+        <p>
+          We use a token to securely transmit information between parties as a JSON object.
+        </p>
+        <p>
+          Token will be decoded in FrontEnd, so we can get user information. 
+        </p>
+        <p class="subTitle">
+          auth.jsx
+        </p>
+        <pre>
+          <code>
+            // use this to decode a token and get the user's information out of it
+            import decode from 'jwt-decode';
+            
+            // create a new class to instantiate for a user
+            class AuthService {
+                getProfile() {
+                    return decode(this.getToken());
+                }
+                
+                // check if user's logged in
+                loggedIn() {
+                // Checks if there is a saved token and it's still valid
+                    const token = this.getToken();
+                    return !!token && !this.isTokenExpired(token); // handwaiving here
+                }
+            
+                 // check if token is expired
+                 isTokenExpired(token) {
+                    try {
+                      const decoded = decode(token);  // describing what you expect to be in your JWT with MyToken
+                    // console.log("decoded Data: ", decoded);
+                    // console.log(Date.now() / 1000);
+                      if (decoded.exp < Date.now() / 1000) {
+                        return true;
+                      } else return false;
+                    } catch (err) {
+                      return false;
+                    }
+                }
+            
+                getToken() {
+                    // Retrieves the user token from localStorage
+                    return localStorage.getItem('id_token');
+                }
+            
+                login(idToken) {
+                    // Saves user token to localStorage
+                    localStorage.setItem('id_token', idToken);
+                }
+            
+                logout() {
+                    // Clear user token and profile data from localStorage
+                    localStorage.removeItem('id_token');
+                  }
+            }
+            
+            export default new AuthService();
+          </code>
+        </pre>
+        <p class="subTitle">
+          Usage in Nav Component
+        </p>
+        <pre>
+          <code>
+            import Auth from '../utils/auth';
+
+            if(Auth.loggedIn()){
+              const user = await Auth.getProfile();
+              setUser(user.data);  // Get userDate from Token stored in localStorage
+
+              const userData = await getSingleUser(Auth.getToken())
+              setUser(userData)  // Get userDate by Token
+            }
+          </code>
+        </pre>
+      </div>
+    </article>
+  </section>
+  <!-- JWT Auth -->
+
+  <!-- Redux Toolkit -->
+  <section id="redux-toolkit" class="container documents">
+    <article>
+      <div class="title border-bottom">
+        <div class="method">
+          Redux Toolkit
+        </div>
+      </div>
+      <div class="description">
+        <p>
+          We use a token to securely transmit information between parties as a JSON object.
+        </p>
+        <p class="subTitle">
+          store.js
+        </p>
+        <pre>
+          <code>
+          import { configureStore } from '@reduxjs/toolkit';
+
+          import userReducer from './slices/user/userSlice';
+
+          export default configureStore({
+              reducer: {
+                  user: userReducer,
+              }
+          })
+          </code>
+        </pre>
+        <p class="subTitle">
+          userSlice.js
+        </p>
+        <pre>
+          <code>
+          import { createSlice } from '@reduxjs/toolkit';
+
+          export const userSlice = createSlice({
+              name: 'user',
+              initialState: {
+                  firstName: "",
+                  username: "",
+                  points: 0,
+                  totalNights: 0
+              },
+              reducers: {
+                  setFirstName: (state, {payload}) => { state.firstName = payload },
+                  setUsername: (state, {payload}) => { state.username = payload },
+                  setPoints: (state, {payload}) => { state.points = payload },
+                  setTotalNights: (state, {payload}) => { state.totalNights = payload }
+              }
+          })
+
+          export const { setFirstName, setUsername, setPoints, setTotalNights } = userSlice.actions;
+
+          export default userSlice.reducer;
+          </code>
+        </pre>
+        <p class="subTitle">
+          Usage in Nav Component
+        </p>
+        <pre>
+          <code>
+          import { useSelector, useDispatch } from 'react-redux'
+          
+          const userFirstName = useSelector(state => state.user.firstName)
+          const username = useSelector(state => state.user.username)
+          // To store user data on Redux
+          const dispatch = useDispatch();
+
+          const userData = await getSingleUser(user._id, Auth.getToken())
+                
+          // To store user data in Redux state
+          dispatch(setFirstName(userData.data[0].firstName));
+          dispatch(setUsername(userData.data[0].username));
+          dispatch(setPoints(userData.data[0].points));
+          dispatch(setTotalNights(userData.data[0].totalNights));
+          </code>
+        </pre>
+      </div>
+    </article>
+  </section>
+
 </main>
 
 

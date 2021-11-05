@@ -49,10 +49,26 @@ function onClickNavMenu(e) {
             document.getElementById('business-logic-document-roomType').style.display="block";
             console.log(selectedMenu);
             break;
+        case 'JWT-FrontEnd':
+            hiddeAll();
+            document.getElementById('jwt-auth-frontend').style.display="block";
+            console.log(selectedMenu);
+            break;
+        case 'JWT-BackEnd':
+            hiddeAll();
+            document.getElementById('jwt-auth-backend').style.display="block";
+            console.log(selectedMenu);
+            break;
+        case 'Redux Toolkit':
+            hiddeAll();
+            document.getElementById('redux-toolkit').style.display="block";
+            console.log(selectedMenu);
+            break;
         default:
             console.log("default");
     }
 }
+
 function hiddeAll() {
     for(let i = 0; i < documents.length; i++){
         documents[i].style.display="none";
