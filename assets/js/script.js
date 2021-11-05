@@ -44,9 +44,14 @@ function onClickNavMenu(e) {
             document.getElementById('model-document-reservation').style.display="block";
             console.log(selectedMenu);
             break;
-        case 'RoomType-Validation':
+        case 'Update-RoomType-Validation':
             hiddeAll();
             document.getElementById('business-logic-document-roomType').style.display="block";
+            console.log(selectedMenu);
+            break;
+        case 'Create-Reservation-Validation':
+            hiddeAll();
+            document.getElementById('business-logic-document-create-reservation').style.display="block";
             console.log(selectedMenu);
             break;
         case 'JWT-FrontEnd':

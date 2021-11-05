@@ -94,7 +94,8 @@
         </button>
         <div class="collapse" id="bussiness-logic-collapse">
           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-            <li><a href="#" class="link-dark rounded navMenu">RoomType-Validation</a></li>
+            <li><a href="#" class="link-dark rounded navMenu">Update-RoomType-Validation</a></li>
+            <li><a href="#" class="link-dark rounded navMenu">Create-Reservation-Validation</a></li>
           </ul>
         </div>
       </li>
@@ -1233,8 +1234,8 @@
   </section>
   <!-- User Model - Schema -->
 
-    <!-- Hotel Model - Schema -->
-    <section id="model-document-hotel" class="container documents">
+  <!-- Hotel Model - Schema -->
+  <section id="model-document-hotel" class="container documents">
       <article>
         <div class="title border-bottom">
           <div class="method">
@@ -1285,11 +1286,11 @@
             </code>
           </pre>
       </article>
-    </section>
-    <!-- Hotel Model - Schema -->
+  </section>
+  <!-- Hotel Model - Schema -->
 
-    <!-- Reservation Model - Schema -->
-    <section id="model-document-reservation" class="container documents">
+  <!-- Reservation Model - Schema -->
+  <section id="model-document-reservation" class="container documents">
       <article>
         <div class="title border-bottom">
           <div class="method">
@@ -1318,8 +1319,8 @@
             </code>
           </pre>
       </article>
-    </section>
-    <!-- Reservation Model - Schema -->
+  </section>
+  <!-- Reservation Model - Schema -->
 
   <!-- Date Validation -->
   <section id="business-logic-document-roomType" class="container documents">
@@ -1448,6 +1449,91 @@
 
     </article>
   </section>
+
+  <section id="business-logic-document-create-reservation" class="container documents">
+    <article>
+      <div class="title border-bottom">
+        <div class="method">
+          Create-Reservation-Validation
+        </div>
+      </div>
+      <div class="description">
+        <p>
+          We want to check if a new reservation has duplicate dates on existing reservations.
+        </p>
+        <p>
+          1. Get all reservations of the user logged in.
+        </p>
+        <pre>
+          <code>
+          // Validation for checking duplicate booked date.
+          console.log("userId", userId, "userId")
+          const userData = await User.find({"_id": userId}).populate("reservation");
+          console.log("userData[0]", userData);
+          if(userData.length == 0){
+              return {message: "Cannot find the user"}
+          }
+          </code>
+        </pre>
+
+        <p>
+          2. Get all upcoming reservations
+        </p>
+        <pre>
+          <code>
+            // Getting all upComing Reservation of the user to compare them with InputReservation.
+            let upComingUserReservation = userData[0]["reservation"] ? 
+                  userData[0].reservation.filter(userReservationData => {
+                      let currentDate = new Date();
+                      let dateStart = userReservationData.dateStart;
+                      if(dateStart >= currentDate && !userReservationData.isCancel){
+                          console.log(dateStart, "in ifstatment")
+                          return userReservationData;
+                      }
+                  }) 
+              : [];
+          </code>
+        </pre>
+
+        <p>
+          3. Compare the date of a new reservation with dates with existing upcoming reservations.
+        </p>
+        <pre>
+          <code>
+          let inputStartDate = new Date(reservationData.dateStart);
+          let inputEndDate = new Date(reservationData.dateEnd);
+  
+          for(let i = 0; i < upComingUserReservation.length; i++){
+              // Case 1. When InputStartDate is less then or equal to dateStart
+              if(inputStartDate <= upComingUserReservation[i].dateStart && upComingUserReservation[i].dateStart <= inputEndDate){
+                 //   |----|   or  |----|: exit reservation
+                 // |--------| or |--| : new reservation
+                 throw {message: "You have a reservation for the date.", data: upComingUserReservation[i]}
+              }
+              // Case 2. When InputStartDate is greater then or equal to dateStart
+              else if(upComingUserReservation[i].dateStart <= inputStartDate && inputStartDate <= upComingUserReservation[i].dateEnd){
+                 // |------|   or  |------|: exit reservation
+                 //   |------| or   |---| : new reservation
+                 throw {message: "You have a reservation for the date.", data: upComingUserReservation[i]}           
+              }
+          }
+          </code>
+        </pre>
+      
+
+        <p>
+          4. Make a reservation if there is not duplicate date.
+        </p>
+        <pre>
+          <code>
+          const reservationInfo = await Reservation.create(reservationData);
+
+          </code>
+        </pre>
+
+    </article>
+  </section>
+
   <!-- Date Validation -->
 
 
